@@ -7,6 +7,13 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(130), nullable=False)
+    email = Column(String(130), nullable=False)
+    password = Column(String(130), nullable=False)
+
 class Planets(Base):
     __tablename__ = 'planets'
     id = Column(Integer, primary_key=True)
@@ -29,19 +36,18 @@ class Characters(Base):
     height = Column(String(250))
     birth_year = Column(String(250))
 
-class Favorites(Base):
-    __tablename__= 'favorites'
+class Favoriteplanets(Base):
+    __tablename__ = 'favoriteplanets'
     id = Column(Integer, primary_key=True)
-    planet_id: Column(Integer, ForeignKey('planet.id'))
-    character_id: Column(Integer, ForeignKey('character.id'))
+    planet_id = Column(Integer, ForeignKey('planets.id'))
+    user_id = Column (Integer, ForeignKey('user.id'))
 
-class User(Base):
-    __tablename__ = 'user'
+class Favoritecharacters(Base):
+    __tablename__ = 'favoritecharacters'
     id = Column(Integer, primary_key=True)
-    name = Column(String(130), nullable=False)
-    email = Column(String(130), nullable=False)
-    password = Column(String(130), nullable=False)
-    favorites_id = Column (Integer, ForeignKey('favorites.id'))
+    character_id= Column(Integer, ForeignKey('characters.id'))
+    user_id = Column (Integer, ForeignKey('user.id'))
+
 
 
 
